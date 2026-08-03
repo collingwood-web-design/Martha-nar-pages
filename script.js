@@ -31,7 +31,7 @@
   }
 
   const CDN_ORIGIN = "https://media.cwd-cdn.com/";
-  const DOWNLOAD_ORIGIN = "https://media.cwd-cdn.com/dl/";
+  const DOWNLOAD_ORIGIN = "https://download.cwd-cdn.com/";
 
   const filenameFromUrl = (url, fallback = "audio.mp3") => {
     try {
@@ -44,7 +44,7 @@
 
   const toDownloadUrl = (src) => {
     if (!src) return src;
-    if (src.startsWith(CDN_ORIGIN) && !src.startsWith(DOWNLOAD_ORIGIN)) {
+    if (src.startsWith(CDN_ORIGIN)) {
       return DOWNLOAD_ORIGIN + src.slice(CDN_ORIGIN.length);
     }
     return src;
