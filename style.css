@@ -647,6 +647,13 @@ ul {
   font-weight: 500;
   font-size: 1rem;
   color: var(--color-ink);
+  flex: 1 1 12rem;
+}
+
+.thanks__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .thanks__note {
@@ -658,6 +665,91 @@ ul {
 .btn--small {
   padding: 0.55rem 1.1rem;
   font-size: 0.9rem;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-accent-deep);
+  border: 1px solid var(--color-border);
+}
+
+.btn--ghost:hover {
+  background: rgba(166, 136, 109, 0.08);
+  color: var(--color-ink);
+}
+
+/* Audio listen modal */
+
+.audio-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+  background: rgba(44, 42, 40, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s var(--ease), visibility 0.25s var(--ease);
+}
+
+.audio-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.audio-modal__panel {
+  width: min(100%, 420px);
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 40px rgba(44, 42, 40, 0.18);
+  transform: translateY(10px);
+  transition: transform 0.25s var(--ease);
+}
+
+.audio-modal.is-open .audio-modal__panel {
+  transform: translateY(0);
+}
+
+.audio-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.audio-modal__title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.audio-modal__close {
+  border: 0;
+  background: transparent;
+  color: var(--color-ink-soft);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.15rem;
+}
+
+.audio-modal__close:hover,
+.audio-modal__close:focus-visible {
+  color: var(--color-ink);
+}
+
+.audio-modal__player {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.audio-modal__download {
+  display: inline-flex;
 }
 
 /* ---------- Footer ---------- */

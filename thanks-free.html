@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -16,26 +16,34 @@
   </header>
 
   <main>
-    <section class="thanks" aria-label="Free download">
+    <section class="thanks" aria-label="Audio downloads">
       <p class="thanks__eyebrow">You're in</p>
       <h2 class="thanks__title">Your 2-Minute Reset™</h2>
       <p class="thanks__lead">
-        Thank you. Download your free audio below. You can save this page to
-        re-download anytime.
+        Thank you. Listen here or download your free audio. This page stays open while you listen.
       </p>
       <ul class="thanks__list">
         <li class="thanks__item">
           <span class="thanks__item-title">2-Minute Reset</span>
-          <a
-            class="btn btn--small"
-            href="https://media.cwd-cdn.com/narm/audio/free/2-minute-reset.mp3"
-            download
-          >Download MP3</a>
+          <div class="thanks__actions">
+            <button
+              type="button"
+              class="btn btn--small btn--ghost"
+              data-audio-play
+              data-audio-title="2-Minute Reset"
+              data-audio-src="https://media.cwd-cdn.com/narm/audio/free/2-minute-reset.mp3"
+            >Listen</button>
+            <a
+              class="btn btn--small"
+              href="https://media.cwd-cdn.com/narm/audio/free/2-minute-reset.mp3"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Download</a>
+          </div>
         </li>
       </ul>
       <p class="thanks__note">
-        Ready for the full recovery sequence?
-        <a href="index.html">View Core™ and Complete™ options</a>.
+        Ready for the full recovery sequence? <a href="index.html">View Core™ and Complete™ options</a>.
       </p>
     </section>
   </main>
@@ -48,5 +56,7 @@
       © 2026 Narcissistic Abuse Recovery Method™. All rights reserved.
     </p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
