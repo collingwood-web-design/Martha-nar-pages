@@ -30,7 +30,65 @@
     revealTargets.forEach((el) => observer.observe(el));
   }
 
+  const filenameFromUrl = (url, fallback = "audio.mp3") => {
+    try {
+      const name = new URL(url).pathname.split("/").pop();
+      return name || fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
+  const downloadAudio = async (src, filename, triggerEl) => {
+    const originalLabel = triggerEl.textContent;
+    triggerEl.disabled = true;
+    triggerEl.textContent = "Preparing…";
+
+    try {
+      const response = await fetch(src, { mode: "cors", credentials: "omit" });
+      if (!response.ok) {
+        throw new Error(`Download failed (${response.status})`);
+      }
+
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = filename || filenameFromUrl(src);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(objectUrl);
+      triggerEl.textContent = "Downloaded";
+      window.setTimeout(() => {
+        triggerEl.textContent = originalLabel;
+        triggerEl.disabled = false;
+      }, 1600);
+    } catch (error) {
+      console.error(error);
+      triggerEl.textContent = "Retry download";
+      triggerEl.disabled = false;
+      window.alert(
+        "We couldn’t download that file in-page. Please try again, or use Listen and save from the player menu."
+      );
+    }
+  };
+
+  document.querySelectorAll("[data-audio-download]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      downloadAudio(
+        btn.dataset.audioSrc,
+        btn.dataset.audioFilename || filenameFromUrl(btn.dataset.audioSrc),
+        btn
+      );
+    });
+  });
+
   const playButtons = document.querySelectorAll("[data-audio-play]");
+  if (!playButtons.length && !document.querySelectorAll("[data-audio-download]").length) {
+    return;
+  }
+
   if (!playButtons.length) return;
 
   const modal = document.createElement("div");
@@ -45,7 +103,7 @@
         <button type="button" class="audio-modal__close" aria-label="Close player">&times;</button>
       </div>
       <audio class="audio-modal__player" controls preload="metadata"></audio>
-      <a class="btn btn--small audio-modal__download" href="#" target="_blank" rel="noopener noreferrer">Download MP3</a>
+      <button type="button" class="btn btn--small audio-modal__download">Download MP3</button>
     </div>
   `;
   document.body.appendChild(modal);
@@ -54,6 +112,8 @@
   const audioEl = modal.querySelector(".audio-modal__player");
   const downloadEl = modal.querySelector(".audio-modal__download");
   const closeBtn = modal.querySelector(".audio-modal__close");
+  let currentSrc = "";
+  let currentFilename = "audio.mp3";
 
   const closeModal = () => {
     audioEl.pause();
@@ -63,8 +123,9 @@
 
   const openModal = (title, src) => {
     titleEl.textContent = title;
+    currentSrc = src;
+    currentFilename = filenameFromUrl(src);
     audioEl.src = src;
-    downloadEl.href = src;
     modal.hidden = false;
     requestAnimationFrame(() => modal.classList.add("is-open"));
     audioEl.play().catch(() => {});
@@ -74,6 +135,11 @@
     btn.addEventListener("click", () => {
       openModal(btn.dataset.audioTitle || "Audio", btn.dataset.audioSrc);
     });
+  });
+
+  downloadEl.addEventListener("click", () => {
+    if (!currentSrc) return;
+    downloadAudio(currentSrc, currentFilename, downloadEl);
   });
 
   closeBtn.addEventListener("click", closeModal);
