@@ -592,6 +592,74 @@ ul {
   max-width: 12ch;
 }
 
+/* ---------- Thank-you / download pages ---------- */
+
+.thanks {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 var(--space-md) var(--space-xl);
+  animation: fadeRise 0.8s var(--ease) both;
+}
+
+.thanks__eyebrow {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+.thanks__title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.85rem, 4vw, 2.6rem);
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-bottom: var(--space-sm);
+}
+
+.thanks__lead {
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-md);
+  max-width: 42ch;
+}
+
+.thanks__list {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: var(--space-lg);
+}
+
+.thanks__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 1rem 1.15rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius);
+}
+
+.thanks__item-title {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--color-ink);
+}
+
+.thanks__note {
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-md);
+}
+
+.btn--small {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+}
+
 /* ---------- Footer ---------- */
 
 .site-footer {
