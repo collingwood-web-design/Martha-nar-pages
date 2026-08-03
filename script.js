@@ -58,24 +58,25 @@
       document.body.appendChild(link);
       link.click();
       link.remove();
-      URL.revokeObjectURL(objectUrl);
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 2000);
       triggerEl.textContent = "Downloaded";
       window.setTimeout(() => {
         triggerEl.textContent = originalLabel;
         triggerEl.disabled = false;
       }, 1600);
     } catch (error) {
-      console.error(error);
+      console.error("NARM download error:", error);
       triggerEl.textContent = "Retry download";
       triggerEl.disabled = false;
       window.alert(
-        "We couldn’t download that file in-page. Please try again, or use Listen and save from the player menu."
+        "Download failed. Please try again in a moment. If it keeps failing, use Listen to play the audio on this page."
       );
     }
   };
 
   document.querySelectorAll("[data-audio-download]").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
       downloadAudio(
         btn.dataset.audioSrc,
         btn.dataset.audioFilename || filenameFromUrl(btn.dataset.audioSrc),
@@ -85,10 +86,6 @@
   });
 
   const playButtons = document.querySelectorAll("[data-audio-play]");
-  if (!playButtons.length && !document.querySelectorAll("[data-audio-download]").length) {
-    return;
-  }
-
   if (!playButtons.length) return;
 
   const modal = document.createElement("div");
@@ -103,17 +100,13 @@
         <button type="button" class="audio-modal__close" aria-label="Close player">&times;</button>
       </div>
       <audio class="audio-modal__player" controls preload="metadata"></audio>
-      <button type="button" class="btn btn--small audio-modal__download">Download MP3</button>
     </div>
   `;
   document.body.appendChild(modal);
 
   const titleEl = modal.querySelector("#audio-modal-title");
   const audioEl = modal.querySelector(".audio-modal__player");
-  const downloadEl = modal.querySelector(".audio-modal__download");
   const closeBtn = modal.querySelector(".audio-modal__close");
-  let currentSrc = "";
-  let currentFilename = "audio.mp3";
 
   const closeModal = () => {
     audioEl.pause();
@@ -123,8 +116,6 @@
 
   const openModal = (title, src) => {
     titleEl.textContent = title;
-    currentSrc = src;
-    currentFilename = filenameFromUrl(src);
     audioEl.src = src;
     modal.hidden = false;
     requestAnimationFrame(() => modal.classList.add("is-open"));
@@ -135,11 +126,6 @@
     btn.addEventListener("click", () => {
       openModal(btn.dataset.audioTitle || "Audio", btn.dataset.audioSrc);
     });
-  });
-
-  downloadEl.addEventListener("click", () => {
-    if (!currentSrc) return;
-    downloadAudio(currentSrc, currentFilename, downloadEl);
   });
 
   closeBtn.addEventListener("click", closeModal);

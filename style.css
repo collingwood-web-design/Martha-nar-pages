@@ -68,6 +68,23 @@ ul {
 .site-header {
   text-align: center;
   padding: var(--space-lg) var(--space-md) var(--space-md);
+  position: relative;
+}
+
+.site-header__home {
+  display: inline-block;
+  margin-top: 0.85rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--color-accent-deep);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.site-header__home:hover,
+.site-header__home:focus-visible {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-accent);
 }
 
 .brand {
