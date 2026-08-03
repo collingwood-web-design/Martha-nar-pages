@@ -30,6 +30,9 @@
     revealTargets.forEach((el) => observer.observe(el));
   }
 
+  const CDN_ORIGIN = "https://media.cwd-cdn.com/";
+  const DOWNLOAD_ORIGIN = "https://narm-audio-download.cwdmedia.workers.dev/";
+
   const filenameFromUrl = (url, fallback = "audio.mp3") => {
     try {
       const name = new URL(url).pathname.split("/").pop();
@@ -39,13 +42,27 @@
     }
   };
 
+  const toDownloadUrl = (src) => {
+    if (!src) return src;
+    if (src.startsWith(CDN_ORIGIN)) {
+      return DOWNLOAD_ORIGIN + src.slice(CDN_ORIGIN.length);
+    }
+    if (src.startsWith("/")) {
+      return DOWNLOAD_ORIGIN.replace(/\/$/, "") + src;
+    }
+    return src;
+  };
+
   const downloadAudio = async (src, filename, triggerEl) => {
     const originalLabel = triggerEl.textContent;
     triggerEl.disabled = true;
     triggerEl.textContent = "Preparing…";
 
     try {
-      const response = await fetch(src, { mode: "cors", credentials: "omit" });
+      const response = await fetch(toDownloadUrl(src), {
+        mode: "cors",
+        credentials: "omit",
+      });
       if (!response.ok) {
         throw new Error(`Download failed (${response.status})`);
       }
