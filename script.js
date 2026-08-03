@@ -31,7 +31,7 @@
   }
 
   const CDN_ORIGIN = "https://media.cwd-cdn.com/";
-  const DOWNLOAD_ORIGIN = "https://narm-audio-download.cwdmedia.workers.dev/";
+  const DOWNLOAD_ORIGIN = "https://media.cwd-cdn.com/dl/";
 
   const filenameFromUrl = (url, fallback = "audio.mp3") => {
     try {
@@ -44,11 +44,8 @@
 
   const toDownloadUrl = (src) => {
     if (!src) return src;
-    if (src.startsWith(CDN_ORIGIN)) {
+    if (src.startsWith(CDN_ORIGIN) && !src.startsWith(DOWNLOAD_ORIGIN)) {
       return DOWNLOAD_ORIGIN + src.slice(CDN_ORIGIN.length);
-    }
-    if (src.startsWith("/")) {
-      return DOWNLOAD_ORIGIN.replace(/\/$/, "") + src;
     }
     return src;
   };
