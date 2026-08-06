@@ -94,6 +94,60 @@ ul {
   animation: fadeRise 0.9s var(--ease) both;
 }
 
+/* ---------- Free lead CTA (under brand) ---------- */
+
+.free-lead {
+  max-width: 34rem;
+  margin: var(--space-md) auto 0;
+  padding: 1.75rem 1.85rem 1.85rem;
+  text-align: left;
+  background: #ffffff;
+  border: 2px solid #c9a66b;
+  border-radius: var(--radius);
+  animation:
+    fadeRise 0.9s var(--ease) 0.1s both,
+    freeLeadPulse 2.6s ease-in-out 1s infinite;
+}
+
+.free-lead__tier {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+  letter-spacing: 0.01em;
+  color: var(--color-accent);
+  line-height: 1.15;
+}
+
+.free-lead__title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  color: var(--color-accent);
+  margin-bottom: 0.85rem;
+  line-height: 1.2;
+}
+
+.free-lead__desc {
+  font-size: 0.98rem;
+  color: var(--color-ink-soft);
+  margin-bottom: 1.35rem;
+  line-height: 1.55;
+}
+
+.btn--lead {
+  min-width: 12.5rem;
+  padding: 0.95rem 1.85rem;
+  font-size: 0.86rem;
+  letter-spacing: 0.14em;
+  background: #e8ddd0;
+  color: var(--color-ink);
+}
+
+.btn--lead:hover {
+  background: #dccfc0;
+  color: var(--color-ink);
+}
+
 /* ---------- Hero ---------- */
 
 .hero {
@@ -329,8 +383,8 @@ ul {
   animation: fadeRise 0.85s var(--ease) both;
 }
 
-.card--free { animation-delay: 0.25s; }
-.card--core { animation-delay: 0.35s; }
+.card--free { animation-delay: 0.2s; }
+.card--core { animation-delay: 0.25s; }
 .card--complete { animation-delay: 0.3s; }
 
 .card:hover {
@@ -838,6 +892,17 @@ ul {
   }
 }
 
+@keyframes freeLeadPulse {
+  0%, 100% {
+    border-color: #c9a66b;
+    box-shadow: 0 0 0 0 rgba(201, 166, 107, 0);
+  }
+  50% {
+    border-color: #b8954f;
+    box-shadow: 0 0 0 5px rgba(201, 166, 107, 0.28);
+  }
+}
+
 @keyframes glowPulse {
   0%, 100% { opacity: 0.55; }
   50% { opacity: 1; }
@@ -898,14 +963,6 @@ ul {
 
   .sphere-wrap {
     width: min(100%, 340px);
-  }
-
-  .pricing__stack {
-    order: 1;
-  }
-
-  .card--complete {
-    order: 0;
   }
 
   .trust__list {
